@@ -8,13 +8,20 @@ import {
   MessageCircle,
   Share2
 } from "lucide-react";
+import { ReactNode } from "react";
+import SidebarActions from "./SidebarActions";
+// import CrystalReactions from "./CrystalReactions";
 
+type Logro = {
+  text: string;
+  icon?: ReactNode;
+};
 
 interface MediaPostProps {
   src?: string;
   user: string;
   descripcion: string;
-  logros: string[];
+  logros: Logro[];
   mediaType: "video" | "image" | "text";
 }
 
@@ -64,10 +71,14 @@ export default function MediaPost({
       className="relative w-full h-[calc(100vh-57.5px)] snap-start overflow-hidden"
 
     >
+      
       {/* Multimedia dinámico */}
       <div className="absolute inset-0 z-0">
         <AutoPlayableMedia src={src} mediaType={mediaType} shouldPlay={isVisible} muted={isMuted} />
       </div>
+
+      {/* <CrystalReactions /> */}
+      <SidebarActions />
 
       {/* Overlay */}
       {mediaType !== "text" && <div className="absolute bottom-0 left-0 right-0 z-10 p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent text-white">
@@ -84,11 +95,13 @@ export default function MediaPost({
         <div className="flex gap-2 flex-wrap text-xs text-gray-300">
           {logros.map((logro, idx) => (
             <span
-              key={idx}
-              className="bg-white/10 px-2 py-1 rounded-full"
-            >
-              {logro}
-            </span>
+            key={idx}
+            className="bg-white/10 px-2 py-1 rounded-full flex items-center gap-1"
+          >
+            {logro.icon}
+            {logro.text}
+          </span>
+          
           ))}
         </div>
         {/* Mute/Unmute button */}
@@ -108,9 +121,13 @@ export default function MediaPost({
             <p className="text-xs text-zinc-400">Nivel 3 · Explorador</p>
             <div className="mt-4 flex gap-2 text-xs text-zinc-400 flex-wrap justify-center max-w-md">
               {logros.map((logro, idx) => (
-                <span key={idx} className="bg-white/10 px-2 py-1 rounded-full">
-                  {logro}
-                </span>
+                <span
+                key={idx}
+                className="bg-white/10 px-2 py-1 rounded-full flex items-center gap-1"
+              >
+                {logro.icon}
+                {logro.text}
+              </span>              
               ))}
             </div>
             <p className="mt-4 text-start font-medium leading-relaxed max-w-md">
